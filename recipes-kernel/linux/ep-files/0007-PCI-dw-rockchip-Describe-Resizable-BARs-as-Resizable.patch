@@ -1,7 +1,7 @@
-From a55b7ad904285dcda3856b269030570e1c81b7c0 Mon Sep 17 00:00:00 2001
+From 7d172a9cfc170b7a3561b769ded5d573145656f4 Mon Sep 17 00:00:00 2001
 From: Niklas Cassel <cassel@kernel.org>
 Date: Fri, 31 Jan 2025 19:29:56 +0100
-Subject: [PATCH 07/19] PCI: dw-rockchip: Describe Resizable BARs as Resizable
+Subject: [PATCH 07/16] PCI: dw-rockchip: Describe Resizable BARs as Resizable
  BARs
 
 Looking at "11.4.4.29 USP_PCIE_RESBAR Registers Summary" in the rk3588 TRM,
@@ -65,5 +65,5 @@ index 93698abff4d9..df2eaa35d045 100644
  
  static const struct pci_epc_features *
 -- 
-2.48.1
+2.49.0
 

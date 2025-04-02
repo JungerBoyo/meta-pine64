@@ -1,7 +1,7 @@
-From 6a7b4aba18488fb9d616488e7e2477cd16fd121f Mon Sep 17 00:00:00 2001
+From 4e814b85fc0b13a5ed6e1c2ef6d4b03730d5645b Mon Sep 17 00:00:00 2001
 From: Niklas Cassel <cassel@kernel.org>
 Date: Thu, 6 Feb 2025 09:11:29 +0100
-Subject: [PATCH 16/19] arm64: dts: dw-rockchip: Disable iommu for pcie3x4 RC
+Subject: [PATCH 10/16] arm64: dts: dw-rockchip: Disable iommu for pcie3x4 RC
  and EP
 
 Signed-off-by: Niklas Cassel <cassel@kernel.org>
@@ -37,5 +37,5 @@ index 840b638af1c2..f308a9bee743 100644
  		phys = <&pcie30phy>;
  		phy-names = "pcie-phy";
 -- 
-2.48.1
+2.49.0
 

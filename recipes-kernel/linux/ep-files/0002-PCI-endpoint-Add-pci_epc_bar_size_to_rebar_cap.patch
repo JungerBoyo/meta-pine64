@@ -1,7 +1,7 @@
-From 63e432dd2ef0ba8b8477b78f5f2b408d1d94baab Mon Sep 17 00:00:00 2001
+From 684de7fcc8c559da7de3b7cdfc41cf658c0c9e9c Mon Sep 17 00:00:00 2001
 From: Niklas Cassel <cassel@kernel.org>
 Date: Fri, 31 Jan 2025 19:29:51 +0100
-Subject: [PATCH 02/19] PCI: endpoint: Add pci_epc_bar_size_to_rebar_cap()
+Subject: [PATCH 02/16] PCI: endpoint: Add pci_epc_bar_size_to_rebar_cap()
 
 Add a helper function to convert a size to the representation used by the
 Resizable BAR Capability Register.
@@ -65,5 +65,5 @@ index 91ce39dc0fd4..713348322dea 100644
  		    struct pci_epf_bar *epf_bar);
  void pci_epc_clear_bar(struct pci_epc *epc, u8 func_no, u8 vfunc_no,
 -- 
-2.48.1
+2.49.0
 

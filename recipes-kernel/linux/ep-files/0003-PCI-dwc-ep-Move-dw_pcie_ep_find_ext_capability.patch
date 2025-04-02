@@ -1,7 +1,7 @@
-From 6719865f789093a0faa8bc2c929aea1c235dbc85 Mon Sep 17 00:00:00 2001
+From 9d6ad89723428a21f2b73a82487cd30e77685ed4 Mon Sep 17 00:00:00 2001
 From: Niklas Cassel <cassel@kernel.org>
 Date: Fri, 31 Jan 2025 19:29:52 +0100
-Subject: [PATCH 03/19] PCI: dwc: ep: Move dw_pcie_ep_find_ext_capability()
+Subject: [PATCH 03/16] PCI: dwc: ep: Move dw_pcie_ep_find_ext_capability()
 
 Move dw_pcie_ep_find_ext_capability() so that it is located next to
 dw_pcie_ep_find_capability().
@@ -72,5 +72,5 @@ index 8e07d432e74f..6b494781da42 100644
  {
  	unsigned int offset;
 -- 
-2.48.1
+2.49.0
 

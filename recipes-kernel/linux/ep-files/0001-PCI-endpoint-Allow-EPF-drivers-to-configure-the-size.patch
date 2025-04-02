@@ -1,7 +1,7 @@
-From 70dd87dcf9685303162a2292d5989a83a864df2d Mon Sep 17 00:00:00 2001
+From 78a9532c86083fbebefa5b400382703130bfb6b2 Mon Sep 17 00:00:00 2001
 From: Niklas Cassel <cassel@kernel.org>
 Date: Fri, 31 Jan 2025 19:29:50 +0100
-Subject: [PATCH 01/19] PCI: endpoint: Allow EPF drivers to configure the size
+Subject: [PATCH 01/16] PCI: endpoint: Allow EPF drivers to configure the size
  of Resizable BARs
 
 A resizable BAR is different from a normal BAR in a few ways:
@@ -98,5 +98,5 @@ index e818e3fdcded..91ce39dc0fd4 100644
  };
  
 -- 
-2.48.1
+2.49.0
 

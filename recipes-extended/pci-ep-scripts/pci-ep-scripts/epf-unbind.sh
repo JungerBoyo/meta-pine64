@@ -1,19 +1,7 @@
-#!/bin/bash
+#!/bin/sh
 
-function get_dev()
-{
-	local d
-
-	d="$(lspci | grep 'Western Digital Device beef' | cut -d ' ' -f 1)"
-	if [ -z "${d}" ]; then
-		echo "device not found"
-		exit 1
-	fi
-
-	echo "0000:${d}"
-}
-
-dev="$(get_dev)"
+source "$(dirname "$0")/epf-get-dev.sh"
+dev=$(get_dev)
 
 if [ -e "/sys/bus/pci/drivers/nvme/${dev}" ]; then
 	echo "Unbind ${dev}..."
@@ -37,4 +25,3 @@ echo 1 > "/sys/bus/pci/rescan"
 #dev="$(get_dev)"
 #echo "Bind ${dev}..."
 #echo -n "${dev}" > /sys/bus/pci/drivers/nvme/bind
-

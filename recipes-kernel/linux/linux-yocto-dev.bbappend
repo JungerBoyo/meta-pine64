@@ -15,17 +15,17 @@ SRC_URI:append:rk3588 = " \
 	file://0007-PCI-dw-rockchip-Describe-Resizable-BARs-as-Resizable.patch \
 	file://0008-PCI-dwc-ep-Add-dw_pcie_ep_hide_ext_capability.patch \
 	file://0009-PCI-dw-rockchip-Hide-broken-ATS-capability.patch \
-	file://0010-PCI-dwc-Add-support-for-vendor-specific-capability-s.patch \
-	file://0011-PCI-dwc-Add-debugfs-based-silicon-debug-support.patch \
-	file://0012-PCI-dwc-Add-debugfs-based-error-injection-support.patch \
-	file://0013-PCI-dwc-Add-debugfs-based-statistical-counter-suppor.patch \
-	file://0014-PCI-dwc-Add-the-debugfs-property-to-provide-the-LTSS.patch \
-	file://0015-PCI-dwc-Add-rockchip-to-the-allowed-vendor-list.patch \
-	file://0016-arm64-dts-dw-rockchip-Disable-iommu-for-pcie3x4-RC-a.patch \
-	file://0017-nvmet-pci-epf-Set-NVMET_PCI_EPF_Q_LIVE-when-a-queue-.patch \
-	file://0018-nvmet-pci-epf-Do-not-add-an-IRQ-vector-if-not-needed.patch \
-	file://0019-nvmet-pci-epf-Keep-completion-queues-mapped.patch \
+	file://0010-arm64-dts-dw-rockchip-Disable-iommu-for-pcie3x4-RC-a.patch \
+	file://0011-nvmet-pci-epf-Keep-completion-queues-mapped.patch \
+	file://0012-nvmet-pci-epf-Always-configure-BAR0-as-64-bit.patch \
+	file://0013-arm64-dts-dw-rockchip-Limit-EP-to-single-lane.patch \
+	file://0014-nvmet-pci-epf-Always-fully-initialize-completion-ent.patch \
+	file://0015-nvmet-pci-epf-Clear-CC-and-CSTS-when-disabling-the-c.patch \
+	file://0016-nvmet-pci-epf-Cleanup-link-state-management.patch \
 "
+
+# You can add this to the files to enable kernel debug options
+# file://rock5b-debug.cfg
 
 # Support device tree overlays
 KERNEL_DTC_FLAGS = "--symbols"

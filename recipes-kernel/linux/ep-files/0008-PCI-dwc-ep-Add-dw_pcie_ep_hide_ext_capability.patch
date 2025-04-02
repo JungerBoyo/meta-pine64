@@ -1,7 +1,7 @@
-From 67a44cc850d7a1f36920ba5329d59e77d5c5fc21 Mon Sep 17 00:00:00 2001
+From 4e8ce84f0cec9b04d065455bf65d5c644f7d2606 Mon Sep 17 00:00:00 2001
 From: Damien Le Moal <dlemoal@kernel.org>
 Date: Mon, 10 Mar 2025 14:37:55 +0900
-Subject: [PATCH 08/19] PCI: dwc: ep: Add dw_pcie_ep_hide_ext_capability()
+Subject: [PATCH 08/16] PCI: dwc: ep: Add dw_pcie_ep_hide_ext_capability()
 
 Add dw_pcie_ep_hide_ext_capability() which can be used by an endpoint
 controller driver to hide a capability.
@@ -94,5 +94,5 @@ index 501d9ddfea16..afa35228c7da 100644
  dw_pcie_ep_get_func_from_ep(struct dw_pcie_ep *ep, u8 func_no)
  {
 -- 
-2.48.1
+2.49.0
 

@@ -11,6 +11,8 @@ SSVID=${VID}
 DEVID=0xBEEF
 MODEL="Linux-pci-epf"
 
+nrmsix=32
+nrmsi=32
 nrioq=4
 #nrioq=$(nproc)
 debug_pci=0
@@ -18,6 +20,7 @@ debug_nvme=0
 debug_epf=0
 mdts=""
 mqes="128"
+nullbs=4096
 rot=0
 
 nsdev=""
@@ -40,6 +43,8 @@ function usage()
 	echo "  --debug-nvme       : Turn on nvme target core debug messages"
 	echo "  --debug-epf        : Turn on nvme PCI endpoint target debug messages"
 	echo "  --debug            : Turn on epf, nvme and pci kernel debug messages"
+	echo "  --nomsix           : Do not enable MSI-X (Default: enabled)"
+	echo "  --nomsi            : Do not enable MSI (Default: enabled)"
 	echo "  --mdts <size (KB)> : Set maximum command transfer size"
 	echo "                       (default 128 KB)"
 	echo "  --mqes <num>       : Set maximum queue size"
@@ -50,6 +55,7 @@ function usage()
 	echo "  --nsdev <path>     : Use file or block device for the namespace"
 	echo "                       (default: use null_blk and /dev/nullb0)."
 	echo "  --sched <sched>    : Use the <sched> I/O scheduler for the NS device"
+	echo "  --bs < LBA size>   : Specify null_blk LBA size (Default: 4096)"
 	echo "  --rot              : Create a null_blk device with rotational=1"
 }
 
@@ -74,6 +80,12 @@ while [ "${1#-}" != "$1" ]; do
 		debug_nvme=1
 		debug_epf=1
 		;;
+	--nomsix)
+		nrmsix=0
+		;;
+	--nomsi)
+		nrmsi=0
+		;;
 	--mdts)
 		shift
 		mdts="$1"
@@ -96,6 +108,10 @@ while [ "${1#-}" != "$1" ]; do
 	--sched)
 		shift
 		sched="$1"
+		;;
+	--bs)
+		shift
+		nullbs="$1"
 		;;
 	--rot)
 		rot="1"
@@ -122,8 +138,9 @@ if [ "${nsdev}" == "" ]; then
 	modprobe null_blk \
 		nr_devices=1 \
 		submit_queues="$(nproc --all)" \
-		gb=1024 max_sectors=2048 rotational=${rot} || \
-		exit_failed "Create null_blk failed"
+		gb=1024 max_sectors=2048 \
+		rotational=${rot} bs=${nullbs} || \
+			exit_failed "Create null_blk failed"
 	nsdev="/dev/nullb0"
 fi
 
@@ -141,8 +158,25 @@ function nvme_setup_subsys()
 	echo "Creating NVMe subsystem ${SUBSYSNQN}, target ${nsdev}"
 
 	echo "    Loading nvmet_pci_epf"
-	modprobe nvmet_pci_epf || \
-		exit_failed "Load nvmet_pci_epf failed"
+	if [ ${debug_nvme} -eq 1 ]; then
+		modprobe nvme_core dyndbg="+p" || \
+			exit_failed "Load nvme_core failed"
+		modprobe nvmet dyndbg="+p" || \
+			exit_failed "Load nvmet failed"
+	else
+		modprobe nvme_core || \
+			exit_failed "Load nvme_core failed"
+		modprobe nvmet || \
+			exit_failed "Load nvmet failed"
+	fi
+
+	if [ ${debug_nvme} -eq 1 ]; then
+		modprobe nvmet_pci_epf dyndbg="+p" || \
+			exit_failed "Load nvmet_pci_epf failed"
+	else
+		modprobe nvmet_pci_epf  || \
+			exit_failed "Load nvmet_pci_epf failed"
+	fi
 
 	# Create the subsystem
 	echo "    Creating subsystem ${SUBSYSNQN}"
@@ -240,8 +274,8 @@ function nvme_teardown_subsys()
 function nvme_pci_start()
 {
 	# Enable pr_debug
-	if [ "${debug_pci}" == "1" ]; then
-		echo "Enabling pci debug"
+	if [ ${debug_pci} -eq 1 ]; then
+		echo "Enabling PCI EP controller debug"
 		echo 8 > "/proc/sys/kernel/printk"
 		echo -n 'file drivers/pci/controller/dwc/pcie-dw-rockchip.c +p;' > \
 			"/sys/kernel/debug/dynamic_debug/control"
@@ -251,17 +285,19 @@ function nvme_pci_start()
 			"/sys/kernel/debug/dynamic_debug/control"
 	fi
 
-	if [ "${debug_nvme}" == "1" ]; then
+	if [ ${debug_nvme} -eq 1 ]; then
 		echo "Enabling NVMe target debug"
 		echo 8 > "/proc/sys/kernel/printk"
+		echo -n 'module nvme_core +p;' > \
+			"/sys/kernel/debug/dynamic_debug/control"
 		echo -n 'module nvmet +p;' > \
 			"/sys/kernel/debug/dynamic_debug/control"
 	fi
 
-	if [ "${debug_epf}" == "1" ]; then
+	if [ ${debug_epf} -eq 1 ]; then
 		echo "Enabling NVMe PCI endpoint target debug"
 		echo 8 > "/proc/sys/kernel/printk"
-		echo -n 'file drivers/nvme/target/pci-epf.c +p;' > \
+		echo -n 'module nvmet-pci-epf +p;' > \
 			"/sys/kernel/debug/dynamic_debug/control"
 	fi
 
@@ -287,10 +323,10 @@ function nvme_pci_start()
 	echo ${DEVID} > "functions/nvmet_pci_epf/${FUNC}/deviceid" || \
 		exit_failed "Set device ID failed"
 
-	echo 32 > "functions/nvmet_pci_epf/${FUNC}/msix_interrupts" || \
+	echo "${nrmsix}" > "functions/nvmet_pci_epf/${FUNC}/msix_interrupts" || \
 		exit_failed "Set msix_interrupts failed"
 
-	echo 32 > "functions/nvmet_pci_epf/${FUNC}/msi_interrupts" || \
+	echo "${nrmsi}" > "functions/nvmet_pci_epf/${FUNC}/msi_interrupts" || \
 		exit_failed "Set msi_interrupts failed"
 
 	echo "${PORTID}" > "functions/nvmet_pci_epf/${FUNC}/nvme/portid" || \

@@ -1,7 +1,7 @@
-From 70a7fb0da9f01c7fc1e74b0426c819589f89909a Mon Sep 17 00:00:00 2001
+From 9442003acc1ccbad6c40d07f2225f31d608805e4 Mon Sep 17 00:00:00 2001
 From: Niklas Cassel <cassel@kernel.org>
 Date: Fri, 7 Mar 2025 13:47:35 +0100
-Subject: [PATCH 09/19] PCI: dw-rockchip: Hide broken ATS capability
+Subject: [PATCH 09/16] PCI: dw-rockchip: Hide broken ATS capability
 
 When running the rk3588 in endpoint mode, with an Intel host with IOMMU
 enabled, the host side prints:
@@ -81,5 +81,5 @@ index df2eaa35d045..7bf22146cfd1 100644
  	.get_features = rockchip_pcie_get_features,
  };
 -- 
-2.48.1
+2.49.0
 

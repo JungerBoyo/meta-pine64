@@ -1,7 +1,7 @@
-From fc226251d9848962b5df5cdee2de9d72775f69fd Mon Sep 17 00:00:00 2001
+From c5435ba831693bf6729d7c2b37918d220bc59cf2 Mon Sep 17 00:00:00 2001
 From: Niklas Cassel <cassel@kernel.org>
 Date: Fri, 31 Jan 2025 19:29:53 +0100
-Subject: [PATCH 04/19] PCI: dwc: endpoint: Allow EPF drivers to configure the
+Subject: [PATCH 04/16] PCI: dwc: endpoint: Allow EPF drivers to configure the
  size of Resizable BARs
 
 The DWC databook specifies three different BARn_SIZING_SCHEME_N
@@ -282,5 +282,5 @@ index 6b494781da42..72418160e658 100644
  
  	dw_pcie_setup(pci);
 -- 
-2.48.1
+2.49.0
 

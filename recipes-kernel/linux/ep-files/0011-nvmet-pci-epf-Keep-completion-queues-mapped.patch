@@ -1,7 +1,7 @@
-From 12608b0f543276ee674206398ed5fc69db0ed0ea Mon Sep 17 00:00:00 2001
+From fe122300d48d3471b0688427b82ccfb3536a5b45 Mon Sep 17 00:00:00 2001
 From: Damien Le Moal <dlemoal@kernel.org>
 Date: Thu, 6 Mar 2025 17:49:16 +0900
-Subject: [PATCH 19/19] nvmet: pci-epf: Keep completion queues mapped
+Subject: [PATCH 11/16] nvmet: pci-epf: Keep completion queues mapped
 
 Instead of mapping and unmapping the completion queues memory to the
 host PCI address space whenever nvmet_pci_epf_cq_work() is called, map
@@ -150,5 +150,5 @@ index b1e31483f157..f56994a78066 100644
  		queue_delayed_work(system_highpri_wq, &cq->work,
  				   NVMET_PCI_EPF_CQ_RETRY_INTERVAL);
 -- 
-2.48.1
+2.49.0
 
