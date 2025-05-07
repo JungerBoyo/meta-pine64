@@ -1,4 +1,5 @@
 FILESEXTRAPATHS:prepend := "${THISDIR}/ep-files:"
+FILESEXTRAPATHS:prepend := "${THISDIR}/files:"
 
 COMPATIBLE_MACHINE:append:pine-h64 = "|pine-h64"
 COMPATIBLE_MACHINE:append:pine-rockpro64 = "|pine-rockpro64"
@@ -26,6 +27,10 @@ SRC_URI:append:rk3588 = " \
 
 # You can add this to the files to enable kernel debug options
 # file://rock5b-debug.cfg
+
+SRC_URI:append:qemux86-64 = " \
+	file://nvme_tcp.cfg \
+"
 
 # Support device tree overlays
 KERNEL_DTC_FLAGS = "--symbols"
